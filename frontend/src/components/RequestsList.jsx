@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/CustomerRequests.css";
+import { API_URL } from "../config";
 
 function RequestsList({ role }) {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ function RequestsList({ role }) {
     const fetchRequests = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await fetch("http://localhost:3000/api/requests", {
+        const response = await fetch(`${API_URL}/api/requests`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

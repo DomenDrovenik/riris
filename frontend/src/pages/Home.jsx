@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import RequestsList from "../components/RequestsList";
+import { API_URL } from "../config";
 
 function Home() {
   const [user, setUser] = useState(null);
@@ -9,7 +10,7 @@ function Home() {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
 
-      const response = await fetch("http://localhost:3000/api/auth/me", {
+      const response = await fetch(`${API_URL}/api/auth/me`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
