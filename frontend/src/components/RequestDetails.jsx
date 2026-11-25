@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/RequestDetails.css";
+import { API_URL } from "../config";
 
 function RequestDetails() {
   const { id } = useParams();
@@ -46,7 +47,7 @@ function RequestDetails() {
           return;
         }
 
-        const userResponse = await fetch("http://localhost:3000/api/auth/me", {
+        const userResponse = await fetch(`${API_URL}/api/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -64,7 +65,7 @@ function RequestDetails() {
         setUser(verifiedUser);
 
         const requestResponse = await fetch(
-          `http://localhost:3000/api/requests/${id}`,
+          `${API_URL}/api/requests/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -92,7 +93,7 @@ function RequestDetails() {
         // Seznam serviserjev potrebuje samo ADMIN
         if (verifiedUser.role === "ADMIN") {
           const techniciansResponse = await fetch(
-            "http://localhost:3000/api/users/technicians",
+            `${API_URL}/api/users/technicians`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -136,7 +137,7 @@ function RequestDetails() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:3000/api/requests/${id}/assign`,
+        `${API_URL}/api/requests/${id}/assign`,
         {
           method: "PATCH",
           headers: {
@@ -181,7 +182,7 @@ function RequestDetails() {
       }
 
       const response = await fetch(
-        `http://localhost:3000/api/requests/${id}/status`,
+        `${API_URL}/api/requests/${id}/status`,
         {
           method: "PATCH",
           headers: {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/NewRequest.css";
+import { API_URL } from "../config";
 
 function NewRequest() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ function NewRequest() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3000/api/requests", {
+      const response = await fetch(`${API_URL}/api/requests`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
