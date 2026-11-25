@@ -93,3 +93,47 @@ jobs:
           name: backend-image
           path: ${{ runner.temp }}/backend-image.tar
           retention-days: 7
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      # Vitest + React Testing Library, poročilo o pokritosti v frontend/coverage
+      - name: Test frontend
+        working-directory: frontend
+        run: npm test
+
+      # Jest + Supertest, poročilo o pokritosti v backend/coverage
+      - name: Test backend
+        working-directory: backend
+        run: npm test
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            frontend/coverage
+            backend/coverage
+          retention-days: 7
