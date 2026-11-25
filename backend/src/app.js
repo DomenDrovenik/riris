@@ -9,7 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    // V produkciji URL nameščenega frontenda (npr. https://servisdesk.netlify.app).
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
   }),
 );
 
