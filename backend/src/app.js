@@ -6,9 +6,6 @@ const userRoutes = require("./routes/user");
 
 const app = express();
 
-// Namerna napaka za preverjanje zaščite veje (no-unused-vars).
-const neuporabljenaSpremenljivka = 42;
-
 app.use(express.json());
 app.use(
   cors({
